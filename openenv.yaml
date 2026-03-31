@@ -1,0 +1,31 @@
+name: email-triage-env
+version: "1.0.0"
+description: >
+  An OpenEnv environment that simulates real-world email triage.
+  An AI agent reads an inbox and must label, prioritize, and reply
+  to emails accurately.
+tags: [openenv, email, triage, nlp]
+tasks:
+  - id: task_email_labeling
+    difficulty: easy
+    max_steps: 10
+    description: Label emails with correct categories
+  - id: task_inbox_prioritization
+    difficulty: medium
+    max_steps: 10
+    description: Assign 1-5 priority to each email
+  - id: task_smart_reply
+    difficulty: hard
+    max_steps: 5
+    description: Draft a professional reply to a given email
+observation_space:
+  type: object
+  fields: [task_id, step, emails, instructions, context]
+action_space:
+  type: object
+  fields: [action_type, email_id, label, priority, reply_text]
+reward_range: [0.0, 1.0]
+api:
+  reset: POST /reset
+  step: POST /step
+  state: GET /state
